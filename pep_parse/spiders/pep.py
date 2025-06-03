@@ -8,16 +8,16 @@ class PepSpider(scrapy.Spider):
     start_urls = ['https://peps.python.org/']
 
     def parse(self, response):
-        links = response.css('section#numerical-index a::attr(href)').getall()
+        links = response.css(
+            '#index-by-category tbody tr a::attr(href)'
+        ).getall()
         for link in links:
             yield response.follow(link, callback=self.parse_pep)
 
     def parse_pep(self, response):
         number = response.css('h1.page-title::text').re_first(r'PEP (\d+)')
         name = response.css('h1.page-title::text').re_first(r'PEP \d+ – (.+)')
-        status = response.xpath(
-            '//dt[text()="Status"]/following-sibling::dd[1]/text()'
-        ).get()
+        status = response.css('dd abbr::text').get()
         yield PepParseItem(
             number=number,
             name=name,

@@ -1,6 +1,3 @@
-from datetime import datetime
-from pathlib import Path
-
 FEED_EXPORT_ENCODING = 'utf-8'
 
 FEEDS = {
@@ -21,4 +18,3 @@ SPIDER_MODULES = ['pep_parse.spiders']
 NEWSPIDER_MODULE = 'pep_parse.spiders'
 
 ROBOTSTXT_OBEY = True
-
